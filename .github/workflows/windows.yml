@@ -1,0 +1,19 @@
+name: Build Windows
+run-name: Build Windows
+on:
+  workflow_dispatch: {}
+jobs:
+  Build_Windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          architecture: x64
+      - run: flutter doctor
+      - run: flutter build windows --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows_build
+          path: build/windows/runner/Release/
